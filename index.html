@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revistas LIS en OpenAlex y SJR · Edición interactiva del estudio</title>
+<meta name="description" content="Análisis bibliométrico de 338 revistas de Bibliotecología y Ciencias de la Información indexadas en OpenAlex y SJR: redes de impacto, productividad, cuartiles y modelos de acceso.">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ═══ Portada · tres variantes animadas (A recursión / B explosión / C plano) ═══ -->
+<header id="cover">
+  <canvas id="cover-canvas"></canvas>
+  <canvas id="cover-canvas-x" style="display:none"></canvas>
+  <canvas id="cover-canvas-w" style="display:none"></canvas>
+  <div class="cover-inner">
+    <p class="cover-kicker">Estudio bibliométrico · OpenAlex + SCImago SJR · Datos compilados 2026</p>
+    <h1 class="cover-title">Las 338 revistas que miden<br><span class="cover-num">la ciencia de la información</span></h1>
+    <p class="cover-sub">Quién cita a quién, quién publica más y quién cobra por publicar en Bibliotecología y Ciencias de la Información</p>
+    <p class="cover-lede">Este estudio analiza la estructura y dinámica de 338 revistas de Bibliotecología y Ciencias de la Información (LIS) indexadas en OpenAlex, con un enfoque descriptivo de análisis de redes. A partir de indicadores de productividad e impacto, construye redes de co-citación y co-ocurrencia temática para identificar núcleos disciplinares, comunidades temáticas y patrones de interrelación. El resultado: un campo dual, con un núcleo anglosajón concentrado —el Reino Unido y Estados Unidos copan el Top 20—, una periferia iberoamericana y africana citada en otra escala, y una coexistencia equilibrada entre acceso abierto y APC que ya reconfigura las reglas del juego.</p>
+    <div class="cover-chips">
+      <button class="chip" data-goto="#sec-exec">Resumen</button>
+      <button class="chip" data-goto="#sec-red">La red de 338</button>
+      <button class="chip" data-goto="#sec-geo">Geografía y acceso</button>
+      <button class="chip" data-goto="#sec-citacion">Citación</button>
+      <button class="chip" data-goto="#sec-prod">Productividad</button>
+      <button class="chip" data-goto="#sec-cuartiles">Cuartiles SJR</button>
+      <button class="chip" data-goto="#sec-topics">Temas</button>
+      <button class="chip" data-goto="#sec-veredicto">Veredicto</button>
+    </div>
+    <p class="cover-anchor">Cada cifra es clicable y abre su base con fuente fechada (K1–K20) · Manuscrito 2026 · Visualizaciones del estudio bajo licencia GNU GPLv3</p>
+    <div class="cover-mode" id="cover-mode" aria-label="Variante de portada">
+      <button data-mode="rec" class="on">A · La estantería infinita</button>
+      <button data-mode="x">B · La revista, despiezada</button>
+      <button data-mode="w">C · El plano</button>
+    </div>
+    <div class="scroll-hint"><span></span>SCROLL</div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══ §0 Resumen ejecutivo ═══ -->
+<section id="sec-exec" class="band" data-win="resumen">
+  <div class="prose">
+    <p class="sec-no">§0 · Resumen ejecutivo</p>
+    <h2>Un campo concentrado: 338 títulos, un núcleo anglosajón y una periferia que cita en otra escala</h2>
+    <p class="dek">La Bibliotecología y Ciencias de la Información se reorganizaron con la digitalización y la apertura disciplinar; la bibliometría sobre datos abiertos permite hoy leer esa estructura completa —quién cita a quién y qué temas dominan el debate— desde una perspectiva abierta.</p>
+    <p>El análisis de redes aplicado a las revistas LIS indexadas en OpenAlex identificó <em>338 revistas</em>; del universo total se seleccionó un núcleo de las <em>20 más citadas</em> para los análisis de co-citación, impacto y productividad. El criterio reduce la densidad visual y se apoya en el principio de ventaja acumulativa —el <b>efecto Mateo</b> (Merton, 1968; Price, 1976)—: el Top 20 concentra el flujo principal de conocimiento y las tendencias dominantes del campo. Antes del análisis, una auditoría manual revisó los <i>Aims &amp; Scope</i> de las 338 revistas para filtrar adscripciones débiles al núcleo disciplinar.</p>
+    <p>Los hallazgos centrales del estudio, en síntesis: la distribución geográfica concentra el <em>52.1% de los títulos en Europa</em> (176) y el 37.3% en América (126); el ranking de citación lo encabeza con enorme ventaja <em>IEEE Transactions on Information Theory</em> (1,367,000 citas); la revista más productiva, <em>Notes and Queries</em> (341,800 documentos), permanece una década en Q4 —prueba de que <b>un mayor output no significa mayor impacto</b>—; y el modelo de acceso se reparte casi en partes iguales entre APC y acceso abierto, aunque 17 de las 20 revistas más productivas cobran APC.</p>
+  </div>
+
+  <div class="prose" style="margin-top:34px">
+    <div class="term-mag">
+      <article class="term" tabindex="0">
+        <h3 class="t-abbr">OpenAlex</h3>
+        <p class="t-full">Base bibliográfica abierta</p>
+        <p class="t-gist">Catálogo abierto de la producción científica global: fuente de datos del estudio para revistas, documentos, citas y topics.</p>
+        <div class="t-more"><p>Macêdo, Ingrid y Shintaku (2025) la describen como «una alternativa robusta y accesible para la investigación bibliométrica, ofreciendo cobertura global y datos actualizados en tiempo real»: compite en volumen con Web of Science o Scopus y supera sus limitaciones de acceso y costo — clave para estudiar la ciencia desde contextos con menor financiamiento.</p></div>
+        <p class="t-hint">Pasa el cursor para leer más</p>
+      </article>
+      <article class="term" tabindex="0">
+        <h3 class="t-abbr">SJR</h3>
+        <p class="t-full">Scimago Journal Rank · cuartiles Q1–Q4</p>
+        <p class="t-gist">Clasificación por cuartiles de las revistas indexadas en Scopus; el estudio la usa para contrastar el posicionamiento 2015–2025 del núcleo.</p>
+        <div class="t-more"><p>El indicador no busca ponderar la calidad de la investigación por el índice en que la revista aparece, sino ofrecer una idea del posicionamiento relativo dentro de la categoría «Library and Information Sciences», tanto de revistas consolidadas como emergentes.</p></div>
+        <p class="t-hint">Pasa el cursor para leer más</p>
+      </article>
+      <article class="term" tabindex="0">
+        <h3 class="t-abbr">Co-citación</h3>
+        <p class="t-full">Análisis de redes sociales (SNA)</p>
+        <p class="t-gist">Dos revistas se co-citan cuando una misma obra las cita juntas; la red resultante revela los núcleos disciplinares del campo.</p>
+        <div class="t-more"><p>Construida con ObservableHQ y Plotly/WebGL, la red de co-citación de las 20 más citadas muestra un sistema dual: un núcleo bibliométrico/informétrico fuertemente integrado y una periferia de sistemas de información con vínculos selectivos hacia el núcleo.</p></div>
+        <p class="t-hint">Pasa el cursor para leer más</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="wide xl"><div id="evidence-chart" class="chart-frame"></div></div>
+
+  <div class="prose">
+    <div class="note-box">
+      <p><b>Cómo leer esta edición.</b> Cada gráfico indica su tabla de origen del manuscrito; cada cifra marcada abre una ficha con su base y su fuente fechada del registro K1–K20. Las palabras del estudio se transcriben con sus matices («coexistencia equilibrada», «marginación relativa»); las estructuras de red que el paper describe solo cualitativamente se dibujan como <i>topologías derivadas</i> y se etiquetan como tales.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ §1 La red ═══ -->
+<section id="sec-red" class="band" data-win="corpus">
+  <div class="prose">
+    <p class="sec-no">§1 · El corpus y su red</p>
+    <h2>338 revistas, cinco corrientes: el núcleo bibliométrico y la periferia de sistemas</h2>
+    <p class="dek">El grafo de conocimiento temático construido con ObservableHQ sobre OpenAlex permite ver el campo entero de una vez: quién está en el centro y quién queda en los márgenes.</p>
+    <p>La red de co-citación confirma que el campo LIS opera como un <em>sistema dual</em>: un núcleo bibliométrico/informétrico fuertemente integrado —alta co-citación interna— y una periferia de sistemas de información que mantiene vínculos selectivos con el núcleo. Las revistas más co-citadas, <b>Journal of Academic Librarianship</b>, <b>Information Processing and Management</b> y <b>Journal of Documentation</b>, funcionan como referentes canónicos, mientras que la co-citación entre clústeres indica una apertura disciplinaria hacia la informática y las políticas de información.</p>
+    <p>El estudio agrupa las 20 revistas núcleo en <b>cinco corrientes</b>: <b>① Bibliometría y Ciencia de la Ciencia</b> (Europa continental), el núcleo más autorreferencial; <b>② Gestión de Información Empresarial y Sistemas de Información</b> (Reino Unido/EE.UU.), liderada por las grandes editoriales; <b>③ Tecnología, Sociedad e Impacto Digital</b>, donde AI/ML, datos abiertos y e-government desplazan la agenda clásica; <b>④ Bibliotecología e Informática Documental Clásica</b>, la identidad disciplinar reconocible, estable en Q1 aunque sin liderar el crecimiento citacional; y <b>⑤ Informática Aplicada e Ingeniería de la Información</b>, de adscripción más débil al núcleo LIS —su presencia ilustra cómo la clasificación de OpenAlex y el SJR ensancha las fronteras del campo.</p>
+  </div>
+  <div class="wide xl"><div id="network-chart" class="chart-frame"></div></div>
+  <div class="prose">
+    <p>La inclusión de IEEE Transactions on Information Theory como primer nodo del ranking —un caso limítrofe disciplinariamente— evidencia la permeabilidad entre la teoría matemática de la información y los estudios métricos. Esa misma tensión recorre todo el corpus: la curación manual de los 338 títulos fue necesaria precisamente porque los límites que dibujan las bases de datos no coinciden con la frontera disciplinar que la comunidad reconoce.</p>
+  </div>
+</section>
+
+<!-- ═══ §2 Geografía y acceso ═══ -->
+<section id="sec-geo" class="band" data-win="geografia">
+  <div class="prose">
+    <p class="sec-no">§2 · Geografía y modelos de acceso</p>
+    <h2>Europa edita la mitad del campo; el acceso abierto empata con el APC</h2>
+    <p class="dek">La distribución geográfica evidencia una fuerte concentración en Europa y América; el posicionamiento por citación, sin embargo, muestra una centralidad aún mayor de las revistas norteamericanas y europeas dentro de la red.</p>
+    <p>Del corpus de 338 revistas, <em>Europa reúne 176 (52.07%)</em> y <em>América 126 (37.28%)</em>; Asia aporta 28 (8.28%), mientras África y Oceanía registran un solo título cada una. En modelos de acceso, el estudio identificó <em>142 revistas (42.1%)</em> que operan con más del 50% de acceso abierto, frente a <em>165 (48.82%)</em> con esquemas de APC menores al 20%; solo 31 se mantienen en una franja híbrida —una <b>coexistencia equilibrada</b> entre suscripción y acceso abierto.</p>
+    <p>El análisis continental añade un matiz: las revistas americanas (58) y europeas (58) dominan los modelos OA por encima del 50% de manera igualitaria, y Asia —con menos títulos— muestra mayor presencia relativa de acceso abierto (21 de 28). El estudio formula ahí su pregunta clave, sin fundamentalismos: <i>¿qué tan costoso o lucrativo es mantener una revista de alto impacto para las grandes editoriales?</i></p>
+  </div>
+  <div class="wide xl"><div id="shelf-chart" class="chart-frame"></div></div>
+</section>
+
+<!-- ═══ §3 Citación ═══ -->
+<section id="sec-citacion" class="band" data-win="citacion">
+  <div class="prose">
+    <p class="sec-no">§3 · Citación</p>
+    <h2>El efecto Mateo en cifras: el líder cita 4.4 veces más que el segundo</h2>
+    <p class="dek">La distribución de citas es altamente concentrada: un núcleo reducido de revistas acumula la visibilidad, y una periferia amplia compite por el resto.</p>
+    <p><em>IEEE Transactions on Information Theory</em> acumula <em>1,367,000 citas</em>, seguida con diferencia marcada por <b>Scientometrics</b> (309,400) e <b>International Journal of Information Management</b> (282,000). El patrón se lee con el principio de ventaja acumulativa descrito por Merton (1968) y desarrollado por Price (1976): las revistas con mayor visibilidad y prestigio tienden a recibir un número creciente de citas, reforzando su posición dominante dentro del sistema científico.</p>
+    <p>El ranking revela además una <b>concentración anglosajona pronunciada</b>: el Reino Unido lidera con 13 revistas (65%) y el mayor volumen de citas; Estados Unidos aparece con 4 (20%); Alemania, Hungría y Países Bajos completan el mapa con un título cada uno. La dualidad anglosajona refleja la hegemonía histórica de las tradiciones británica y norteamericana en los estudios de información.</p>
+  </div>
+  <div class="wide xl"><div id="cited-chart" class="chart-frame"></div></div>
+  <div class="prose">
+    <p>En el otro extremo, las revistas iberoamericanas y periféricas se posicionan en escalas menores de citación: <b>Revista Española de Documentación Científica</b> (España, 7,180 citas), <b>Perspectivas em Ciência da Informação</b> (Brasil, 5,362), <b>Palabra Clave</b> (Colombia, 3,230), <b>Encontros Bibli</b> (Brasil, 3,049), <b>African Journal of Library Archives and Information Science</b> (Nigeria, 2,617) o <b>e-Ciencias de la Información</b> (Costa Rica, 922). La diferencia refleja una marcada desigualdad en la distribución del impacto, donde las publicaciones del sur global presentan menor visibilidad frente al ámbito anglosajón.</p>
+  </div>
+  <div class="wide xl"><div id="periphery-chart" class="chart-frame"></div></div>
+  <blockquote class="quote-card">
+    <p class="q-text">«El JCR sufre de un importante sesgo lingüístico y geográfico» — situación que persiste en Scimago/Scopus, aunque con matices diferentes.</p>
+    <p class="q-who">— <b>Sobrido Prieto &amp; Sobrido Prieto</b>, Enfermería Global 12(31), 2013 · citado por el estudio</p>
+    <div class="q-why"><span class="q-lab">Contexto</span> El Top 20 no incluye ninguna revista iberoamericana, asiática o africana.
+      <span class="q-lab why">Por qué importa</span> El patrón corrobora que la asimetría no indica menor calidad, sino desventajas estructurales en redes de citación dominadas por el inglés.</div>
+  </blockquote>
+</section>
+
+<!-- ═══ §4 Productividad ═══ -->
+<section id="sec-prod" class="band" data-win="productividad">
+  <div class="prose">
+    <p class="sec-no">§4 · Productividad y modelo editorial</p>
+    <h2>La revista que más publica no es la que más cita: 85% del núcleo productivo cobra APC</h2>
+    <p class="dek">Notes and Queries encabeza la producción con 341,800 documentos acumulados; sin embargo, el volumen no se traduce en impacto — y el modelo de publicación dominante del núcleo es el de cargos por artículo.</p>
+    <p>El análisis de productividad identifica a <em>Notes and Queries</em> (Oxford Univ. Press) como la revista más productiva, con <em>341,800 documentos</em>, seguida por <b>IEEE Transactions on Information Theory</b> (20,160) y <b>Notes</b> (Music Library Assoc., 16,410): un núcleo histórico de producción con trayectoria editorial consolidada. En el segundo nivel aparecen títulos de grandes grupos editoriales internacionales, reflejo de su presencia dominante en la producción científica del área.</p>
+    <p>En el modelo de acceso, el liderazgo es de las revistas con <b>Article Processing Charges</b>: de las 20 más productivas, <em>17 utilizan APC (85%)</em> y solo 3 son acceso abierto sin costo para los autores (15%). Cruzado con la citación, el dato dibuja la tensión central del estudio: el centro productivo del campo se sostiene sobre cargos a los autores, mientras el acceso abierto genuino avanza por la periferia.</p>
+  </div>
+  <div class="wide xl"><div id="scatter-chart" class="chart-frame"></div></div>
+  <div class="wide xl">
+    <div>
+      <p class="chart-title">Tabla 3 · Las 20 revistas más productivas del corpus</p>
+      <p class="chart-sub">DOCUMENTOS ACUMULADOS INDEXADOS EN OPENALEX · 🔘 APC / 🟢 ACCESO ABIERTO SEGÚN LA NOTA DEL ESTUDIO</p>
+    </div>
+    <div id="prod-table"></div>
+    <p class="chart-src">Fuente · Estudio, Tabla 3 (K9, K10) · datos OpenAlex, compilado 2026</p>
+  </div>
+  <blockquote class="quote-card">
+    <p class="q-text">«Un mayor output no significa mayor impacto y mayor impacto no necesariamente debe comprenderse como mayor output».</p>
+    <p class="q-who">— <b>El estudio</b>, a propósito de Notes and Queries, Tabla 4, 2026</p>
+    <div class="q-why"><span class="q-lab">Contexto</span> La revista con mayor tasa de producción del análisis (341,800 documentos) permanece en Q4 durante una década, sin fluctuación progresiva.
+      <span class="q-lab why">Por qué importa</span> Sugiere dificultades para mantener la competitividad —constancia editorial, sí, pero desafíos significativos de visibilidad y citación.</div>
+  </blockquote>
+</section>
+
+<!-- ═══ §5 Cuartiles ═══ -->
+<section id="sec-cuartiles" class="band" data-win="cuartiles">
+  <div class="prose">
+    <p class="sec-no">§5 · Cuartiles SJR 2015–2025</p>
+    <h2>Trece revistas llevan una década en Q1: barreras de entrada para las emergentes</h2>
+    <p class="dek">El mapa de calor de la categoría Library and Information Sciences muestra quién se sostiene arriba, quién asciende y quién no logra salir del último cuartil.</p>
+    <p>Los hallazgos identifican <em>13 revistas con estabilidad en el primer cuartil</em> durante todo el período analizado: el núcleo duro de alta visibilidad de la disciplina, con estándares de excelencia citacional consistentes durante casi una década. Destaca la <b>Journal of Information Science</b>, con transición positiva de Q2 (2015–2016) a Q1 (2017–2025). <b>Telecommunications Policy</b> y <b>Personal and Ubiquitous Computing</b> son los únicos casos que se integran al primer cuartil hasta 2021 —señal de alto impacto citacional, mejora editorial y adaptación exitosa a las tendencias contemporáneas.</p>
+    <p>El caso inverso es <b>Notes and Queries</b>: la más productiva del análisis permanece en Q4 durante toda la década. La estabilidad del núcleo Q1, leída con el efecto Mateo, sugiere <b>barreras de entrada significativas</b> para las publicaciones emergentes.</p>
+  </div>
+  <div class="wide xl"><div id="quartile-chart" class="chart-frame"></div></div>
+  <div class="prose">
+    <div class="note-box">
+      <p><b>Disciplina de datos.</b> El manuscrito solo reporta las trayectorias completas de Journal of Information Science y Notes and Queries, el año de entrada a Q1 de Telecommunications Policy y Personal and Ubiquitous Computing, y el conteo agregado de 13 estables. Las celdas 2015–2020 de esas dos últimas se dibujan como <i>sin dato</i> —el estudio no las publica y aquí no se interpolan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ §6 Temas ═══ -->
+<section id="sec-topics" class="band" data-win="temas">
+  <div class="prose">
+    <p class="sec-no">§6 · Estructura temática</p>
+    <h2>Los temas dominantes ya no son los de la bibliotecología clásica</h2>
+    <p class="dek">El mapa de co-ocurrencia de topics de OpenAlex muestra un núcleo denso de tecnología, gestión y sociedad digital; los tópicos de Library Science quedan en la periferia izquierda, con escasas conexiones.</p>
+    <p>La co-ocurrencia se definió cuando dos temas aparecen juntos en un mismo artículo, con un umbral mínimo de 2 co-ocurrencias y relevancia ≥0.5. El dominio «Other» concentra la mayor cantidad de tópicos (31), seguido de Computer Science (18), Information Science (15) y Management (10); <b>Library Science aporta solo 2</b>.</p>
+    <p>El nodo mayor es <em>Technology Adoption and User Behaviour</em> (frecuencia 111, relevancia 99.2%, 12 revistas), seguido de <b>scientometrics and bibliometrics research</b> (96; 98.7%) —transversal y articulador de la red—, <b>Digital Marketing and Social Media</b> (64), <b>Social Media and Politics</b> (58) y <b>Knowledge Management and Sharing</b> (53). En el extremo opuesto, <b>Library Science and Information Literacy</b> (17) y <b>Library Science and Administration</b> (9) aparecen periféricos: baja co-ocurrencia con los temas dominantes y una cierta <b>marginación temática</b> dentro de las propias revistas de alto impacto del campo.</p>
+  </div>
+  <div class="wide xl"><div id="topics-chart" class="chart-frame"></div></div>
+  <div class="prose">
+    <p>El fenómeno —documentado por Nolin y Åström (2010) y Julien et al. (2011)— indica una <b>reconfiguración epistémica</b>: de la organización del conocimiento hacia la gestión informacional en contextos organizacionales y digitales. La transición plantea riesgos de identidad disciplinar; como advirtieron Furner y Gilliland (2022), la absorción de agendas de la administración y las tecnologías de la información puede diluir los aportes específicos de la Bibliotecología en favor de enfoques más instrumentalistas.</p>
+  </div>
+</section>
+
+<!-- ═══ §7 Veredicto ═══ -->
+<section id="sec-veredicto" class="band" data-win="veredicto">
+  <div class="prose">
+    <p class="sec-no">§7 · Discusión y veredicto</p>
+    <h2>Coexistencia equilibrada con núcleo APC: la reconfiguración avanza, pero aún no lidera el centro</h2>
+    <p class="dek">La concentración extrema de citas ilustra el efecto Mateo; la geopolítica del conocimiento explica la periferia; y la disputa OA–APC define la economía política del campo.</p>
+    <p>La estructura jerárquica responde parcialmente a lo que Cronin y Sugimoto (2014) denominan <b>«políticas de prestigio»</b>: editoriales como Elsevier, Wiley, SAGE, Springer Nature, Emerald y Taylor &amp; Francis invierten en visibilidad mediante indexación agresiva y acuerdos institucionales, consolidando lo que el estudio llama <i>oligopolios del conocimiento</i>. Los datos lo confirman: el 48.8% de las revistas indexadas opera con APC, lo que plantea interrogantes sobre la <b>sostenibilidad del acceso abierto genuino</b> en revistas de alto impacto.</p>
+    <p>La escasa representación de revistas iberoamericanas, africanas y asiáticas en el top de citaciones refleja lo que Canagarajah (2002) identificó como la <b>«geopolítica del conocimiento académico»</b>: aunque el corpus incluye 126 revistas americanas y 28 asiáticas, ninguna latinoamericana o asiática alcanza el Top 20. Alperin et al. (2021), sobre datos de OpenAlex, demostraron que las revistas de América Latina y África reciben proporcionalmente menos citas incluso controlando por calidad percibida, por su menor integración en redes de coautoría internacional.</p>
+  </div>
+  <div class="wide xl"><div id="verdict-chart" class="chart-frame"></div></div>
+  <div class="prose">
+    <p>El estudio concluye aportando una visión actualizada del campo desde una perspectiva abierta, y destaca el potencial de OpenAlex como fuente para estudios bibliométricos y de ciencia abierta. Entre sus limitaciones reconoce que la identificación directa de revistas por área disciplinar no siempre es inmediata en el endpoint <i>/sources</i>, lo que exige filtrado y curación adicionales —y deja una pregunta para trabajos futuros: <i>¿en qué se basa OpenAlex para clasificar revistas en categorías o disciplinas?</i></p>
+    <div class="note-box">
+      <p><b>Sobre la balanza.</b> La ponderación es cualitativa —no es un puntaje—: resume la evidencia que el propio estudio pone de cada lado de la disputa OA–APC. Los pesos punteados son condiciones que la literatura aún no ha medido (costos reales de APC por editorial, migración del núcleo Q1); la franja roja inferior recoge los hechos que obligarían a revisar el veredicto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Fuentes ═══ -->
+<footer id="sec-sources">
+  <div class="prose">
+    <p class="sec-no">Fuentes y método</p>
+    <h2>Método, disciplina de datos y registro de fuentes</h2>
+    <div class="note-box">
+      <p><b>Gradación de la evidencia.</b> Toda cifra del sitio traza al manuscrito del estudio (2026); los datos primarios son OpenAlex (API) y SCImago Journal Rank sobre Scopus, compilados por el estudio entre 2015 y 2026. Las estructuras de red dibujadas a partir de descripciones cualitativas del texto se etiquetan como «topología derivada».</p>
+      <p><b>Clases de fuente, todas fechadas.</b> <span class="src-cat industry">OpenAlex</span>
+        <span class="src-cat company">SCImago / Scopus</span> <span class="src-cat kimi">Análisis del estudio</span>
+        <span class="src-cat broker">Literatura citada</span></p>
+      <p><b>Instrumental declarado por el estudio.</b> API de OpenAlex · ObservableHQ (redes) · Datawrapper (mapa de calor) · Plotly/WebGL (co-citación) · Connected Papers (mapeo de literatura) · Kimi.com (tratamiento, curación y validación de scripts de visualización). Visualizaciones originales bajo licencia GNU GPLv3, copyright 2026.</p>
+      <p><b>Disciplina de medición.</b> Los huecos se dibujan como huecos (tramas y «s/d»), sin interpolación; los dobles fundamentos no se dividen entre sí; las cifras del estudio se conservan con su redondeo original.</p>
+    </div>
+  </div>
+  <div class="wide xl">
+    <div style="margin-top:26px">
+      <p class="chart-title">Registro de anclas · K1–K20</p>
+      <p class="chart-sub">CADA CIFRA EN LA QUE SE APOYA EL SITIO, CON SU FUENTE FECHADA</p>
+    </div>
+    <div id="source-list"></div>
+    <div style="margin-top:44px">
+      <p class="chart-title">Referencias del manuscrito</p>
+      <p class="chart-sub">TRANSCRIPCIÓN FIEL DEL APARATO BIBLIOGRÁFICO DEL ESTUDIO</p>
+    </div>
+    <div id="ref-list"></div>
+  </div>
+  <div class="prose">
+    <p class="colophon">Edición interactiva del estudio · Compilada 2026-08-19 · Manuscrito fuente: «Análisis bibliométrico de revistas en Bibliotecología y Ciencias de la Información indexadas en OpenAlex y SJR: análisis de redes de impacto» · Sin valoración de calidad individual de revistas</p>
+  </div>
+</footer>
+
+</main>
+
+<!-- Rail persistente de contexto -->
+<aside id="dash-rail" aria-label="Panel de contexto"><canvas id="dash-canvas"></canvas></aside>
+
+<!-- Ficha de drill-down -->
+<div id="drill-card" hidden></div>
+
+<script src="js/data.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/cover.js"></script>
+<script src="js/cover-exploded.js"></script>
+<script src="js/cover-wire.js"></script>
+<script src="js/chart-evidence.js"></script>
+<script src="js/chart-network.js"></script>
+<script src="js/chart-shelves.js"></script>
+<script src="js/chart-cited.js"></script>
+<script src="js/chart-scatter.js"></script>
+<script src="js/chart-quartiles.js"></script>
+<script src="js/chart-topics.js"></script>
+<script src="js/chart-verdict.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/sources.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
